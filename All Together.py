@@ -38,12 +38,7 @@ warlock_first = ["Armor of Agathys", "Arms of Hadar", "Cause Fear", "Charm Perso
 wizard_cantrip = ["Acid Splash", "Blade Ward", "Booming Blade", "Chill Touch", "Control Flames", "Create Bonfire", "Dancing Lights", "Encode Thoughts", "Fire Bolt", "Friends", "Frostbite", "Green-Flame Blade", "Gust", "Infestation", "Light", "Lightning Lure", "Mage Hand", "Mending", "Message", "Mind Sliver", "Minor Illusion", "Mold Earth", "On/Off", "Poison Spray", "Prestidigitation", "Ray of Frost", "Sapping Sting", "Shape Water", "Shocking Grasp", "Sword Burst", "Thunderclap", "Toll the Dead", "True Strike"]
 wizard_first = ["Asorb Elements", "Acid Stream", "Alarm", "Burning Hands", "Catapult", "Cause Fear", "Charm Person", "Chromatic Orb", "Color Spray", "Comprehend Languages", "Detect Magic", "Disguise Self", "Distort Value", "Earth Tremor", "Expeditious Retreat", "False Life", "Feather Fall", "Find Familiar", "Fog Cloud", "Frost Fingers", "Gift of Alacrity", "Grease", "Healing Elixir", "Ice Knife", "Id Insinuation", "Identify", "Illusory Script", "Infallible Relay", "Jim's Magic Missle", "Jump", "Longstrider", "Mage Armor", "Magic Missle", "Magnify Gravity", "Protection from Evil and Good", "Puppet", "Ray of Sickness", "Remote Access", "Sense Emotion", "Shield", "Silent Image", "Silvery Barbs", "Sleep", "Snare", "Sudden Awakening", "Tasha's Caustic Brew", "Tasha's Hideous Laughter", "Tenser's Floating Disk", "Thunderwave", "Unseen Servant", "Witch Bolt"]
 
-
-
-
-
-
-# URLs for the Races, Classes, and Backgrounds
+# URLs for the Races, Classes, Backgrounds, and Spells
 urls = {
     "races": {
         "Aasimar": "http://dnd5e.wikidot.com/lineage:aasimar",
@@ -294,10 +289,8 @@ def generate_character():
     return random_race, random_class, random_background, random_male, random_female, random_surname
 
 def roll_4d6_drop_lowest():
-    # Roll 4d6
     rolls = [random.randint(1, 6) for _ in range(4)]
     lowest_roll = min(rolls)
-    # Take lowest roll out
     rolls.remove(lowest_roll)
     total = sum(rolls)
     return total
@@ -309,10 +302,8 @@ def generate_ability_scores():
         scores.append(score)
     return scores
 
-
 def open_url(url):
     webbrowser.open_new(url)
-
 
 def display_character():
     random_race, random_class, random_background, random_male, random_female, random_surname = generate_character()
@@ -320,7 +311,7 @@ def display_character():
     roll_stat.sort(reverse=True)
     details_text.config(state=tk.NORMAL)
     details_text.delete(1.0, tk.END)
-# Character Gen
+    # Character Gen
     details_text.insert(tk.END, "\nRace: ")
     details_text.insert(tk.END, random_race, ("race", random_race))
     details_text.insert(tk.END, "\nClass: ")
@@ -334,29 +325,31 @@ def display_character():
     details_text.insert(tk.END, "\nSurname: ")
     details_text.insert(tk.END, random_surname)
     details_text.insert(tk.END, "\n\n")
-# Dice roll
+    # Dice roll
     details_text.insert(tk.END, "Here are your stats: ")
     details_text.insert(tk.END, roll_stat)
     details_text.insert(tk.END, "\n")
     details_text.insert(tk.END, "\nSuggested Stats: \n")
 
     if random_class == "Artificer":
+        # Assign Stats
         stat_spread = ["Intelligence", "Dexterity", "Constitution", "Wisdom", "Charisma", "Strength"]
         for i in range(6):
             details_text.insert(tk.END, f"{stat_spread[i]}: {roll_stat[i]}\n")
+        # Generate Spells
         a_c_1, a_c_2 = random.sample(artificer_cantrip, 2)
         a_f_1, a_f_2 = random.sample(artificer_first, 2)
         
         details_text.config(state=tk.NORMAL)
-        #details_text.delete(1.0, tk.END)
-        details_text.insert(tk.END, "\n\nArtificiers have 2 Cantrips and 2 First Level Spells ")
 
+        details_text.insert(tk.END, "\n\nArtificiers have 2 Cantrips and 2 First Level Spells ")
+        # Cantrips
         details_text.insert(tk.END, "\n\nArtificer Cantrips: ")
         details_text.insert(tk.END, "\n    1st Cantrip: ")
         details_text.insert(tk.END, a_c_1, ("a_c_1", a_c_1))
         details_text.insert(tk.END, "\n    2nd Cantrip: ")
         details_text.insert(tk.END, a_c_2, ("a_c_2", a_c_2))
-
+        # First Level Spells
         details_text.insert(tk.END, "\n\nArtificer First Level Spells:")
         details_text.insert(tk.END, "\n    1st Spells: ")
         details_text.insert(tk.END, a_f_1, ("a_f_1", a_f_1))
@@ -376,29 +369,32 @@ def display_character():
         details_text.config(state=tk.DISABLED)
 
     elif random_class == "Barbarian":
+        # Assign Stats
         stat_spread = ["Strength", "Constitution", "Dexterity", "Wisdom", "Charisma", "Intelligence"]
         for i in range(6):
             details_text.insert(tk.END, f"{stat_spread[i]}: {roll_stat[i]}\n")
+        
         details_text.config(state=tk.DISABLED)
 
     elif random_class == "Bard":
+        # Assign Stats
         stat_spread = ["Charisma", "Dexterity", "Constitution", "Wisdom", "Intelligence", "Strength"]
         for i in range(6):
             details_text.insert(tk.END, f"{stat_spread[i]}: {roll_stat[i]}\n")
+        # Generate Spells
         b_c_1, b_c_2 = random.sample(bard_cantrip, 2)
         b_f_1, b_f_2, b_f_3, b_f_4 = random.sample(bard_first, 4)
 
         details_text.config(state=tk.NORMAL)
-        #details_text.delete(1.0, tk.END)
         
         details_text.insert(tk.END, "\nBards have 2 Cantrips and 4 First Level Spells: ")
-
+        # Cantrips
         details_text.insert(tk.END, "\n\nBard Cantrips: ")
         details_text.insert(tk.END, "\n    1st Cantrip: ")
         details_text.insert(tk.END, b_c_1, ("b_c_1", b_c_1))
         details_text.insert(tk.END, "\n    2nd Cantrip: ")
         details_text.insert(tk.END, b_c_2, ("b_c_2", b_c_2))
-        
+        # First Level Spells
         details_text.insert(tk.END, "\n\nBard First Level Spells:")
         details_text.insert(tk.END, "\n    1st Spell: ")
         details_text.insert(tk.END, b_f_1, ("b_f_1", b_f_1))
@@ -426,9 +422,11 @@ def display_character():
         details_text.config(state=tk.DISABLED)
 
     elif random_class == "Cleric":
+        # Assign Stats
         stat_spread = ["Wisdom", "Constitution", "Dexterity", "Strength", "Intelligence", "Charisma"]
         for i in range(6):
             details_text.insert(tk.END, f"{stat_spread[i]}: {roll_stat[i]}\n")
+        # Generate Spells
         c_c_1, c_c_2, c_c_3 = random.sample(cleric_cantrip, 3)
         c_f_1 = random.choice(cleric_first)
         c_f_2_1, c_f_2_2 = random.sample(cleric_first, 2)
@@ -438,10 +436,9 @@ def display_character():
         c_f_6_1, c_f_6_2, c_f_6_3, c_f_6_4, c_f_6_5, c_f_6_6 =random.sample(cleric_first, 6)
         
         details_text.config(state=tk.NORMAL)
-        #details_text.delete(1.0, tk.END)
 
         details_text.insert(tk.END, "\nClerics have 3 cantrips and 'WIS+LVL' First Level Spells")
-
+        # Cantrips
         details_text.insert(tk.END, "\n\nCleric Cantrips: ")
         details_text.insert(tk.END, "\n    1st Cantrip: ")
         details_text.insert(tk.END, c_c_1, ("c_c_1", c_c_1))
@@ -449,18 +446,18 @@ def display_character():
         details_text.insert(tk.END, c_c_2, ("c_c_2", c_c_2))
         details_text.insert(tk.END, "\n    3rd Cantrip: ")
         details_text.insert(tk.END, c_c_3, ("c_c_3", c_c_3))
-
+        # First Level - 1 Spell
         details_text.insert(tk.END, "\n\nCleric First Level Spells:")
         details_text.insert(tk.END, "\n    Wisdom 1-11: 1 spell ")
         details_text.insert(tk.END, "\n        1st Spell: ")
         details_text.insert(tk.END, c_f_1, ("c_f_1", c_f_1))
-
+        # First Level - 2 Spells
         details_text.insert(tk.END, "\n\n    Wisdom 12-13: 2 spells ")
         details_text.insert(tk.END, "\n        1st Spell: ")
         details_text.insert(tk.END, c_f_2_1, ("c_f_2_1", c_f_2_1))
         details_text.insert(tk.END, "\n        2nd Spell: ")
         details_text.insert(tk.END, c_f_2_2, ("c_f_2_2", c_f_2_2))
-
+        # First Level - 3 Spells
         details_text.insert(tk.END, "\n\n    Wisdom 14-15: 3 spells ")
         details_text.insert(tk.END, "\n        1st Spell: ")
         details_text.insert(tk.END, c_f_3_1, ("c_f_3_1", c_f_3_1))
@@ -468,7 +465,7 @@ def display_character():
         details_text.insert(tk.END, c_f_3_2, ("c_f_3_2", c_f_3_2))
         details_text.insert(tk.END, "\n        3rd Spell: ")
         details_text.insert(tk.END, c_f_3_3, ("c_f_3_3", c_f_3_3))
-
+        # First Level - 4 Spells
         details_text.insert(tk.END, "\n\n    Wisdom 16-17: 4 spells")
         details_text.insert(tk.END, "\n        1st Spell: ")
         details_text.insert(tk.END, c_f_4_1, ("c_f_4_1", c_f_4_1))
@@ -478,7 +475,7 @@ def display_character():
         details_text.insert(tk.END, c_f_4_3, ("c_f_4_3", c_f_4_3))
         details_text.insert(tk.END, "\n        4th Spell: ")
         details_text.insert(tk.END, c_f_4_4, ("c_f_4_4", c_f_4_4))
-
+        # First Level - 5 Spells
         details_text.insert(tk.END, "\n\n    Wisdom 18-19: 5 spells")
         details_text.insert(tk.END, "\n        1st Spell: ")
         details_text.insert(tk.END, c_f_5_1, ("c_f_5_1", c_f_5_1))
@@ -490,7 +487,7 @@ def display_character():
         details_text.insert(tk.END, c_f_5_4, ("c_f_5_4", c_f_5_4))
         details_text.insert(tk.END, "\n        5th Spell: ")
         details_text.insert(tk.END, c_f_5_5, ("c_f_5_5", c_f_5_5))
-
+        # First Level - 6 Spells
         details_text.insert(tk.END, "\n\n    Wisdom 20: 6 spells")
         details_text.insert(tk.END, "\n        1st Spell: ")
         details_text.insert(tk.END, c_f_6_1, ("c_f_6_1", c_f_6_1))
@@ -563,9 +560,11 @@ def display_character():
         details_text.config(state=tk.DISABLED)
 
     elif random_class == "Druid":
+        # Assign Stats
         stat_spread = ["Wisdom", "Constitution", "Dexterity", "Intelligence", "Charisma", "Strength"]
         for i in range(6):
             details_text.insert(tk.END, f"{stat_spread[i]}: {roll_stat[i]}\n")
+        # Generate Spells
         d_c_1, d_c_2 = random.sample(druid_cantrip, 2)
         d_f_1 = random.choice(druid_first)
         d_f_2_1, d_f_2_2 = random.sample(druid_cantrip, 2)
@@ -575,27 +574,26 @@ def display_character():
         d_f_6_1, d_f_6_2, d_f_6_3, d_f_6_4, d_f_6_5, d_f_6_6 = random.sample(druid_cantrip, 6)
     
         details_text.config(state=tk.NORMAL)
-        #details_text.delete(1.0, tk.END)
 
         details_text.insert(tk.END, "\nDruids have 2 Cantrips and 'WIS+LVL' First Level Spells: ")
-
+        # Cantrips
         details_text.insert(tk.END, "\n\nDruid Cantrips: ")
         details_text.insert(tk.END, "\n    1st Cantrip: ")
         details_text.insert(tk.END, d_c_1, ("d_c_1", d_c_1))
         details_text.insert(tk.END, "\n    2nd Cantrip: ")
         details_text.insert(tk.END, d_c_2, ("d_c_2", d_c_2))
-        
+        # First Level - 1 Spell
         details_text.insert(tk.END, "\n\nDruid First Level Spells: ")
         details_text.insert(tk.END, "\n    Wisdom 1-11: 1 Spell")
         details_text.insert(tk.END, "\n        1st Spell: ")
         details_text.insert(tk.END, d_f_1, ("d_f_1", d_f_1))
-
+        # First Level - 2 Spells
         details_text.insert(tk.END, "\n\n    Wisdom 12-13: 2 Spells")
         details_text.insert(tk.END, "\n        1st Spell: ")
         details_text.insert(tk.END, d_f_2_1, ("d_f_2_1", d_f_2_1))
         details_text.insert(tk.END, "\n        2nd Spell: ")
         details_text.insert(tk.END, d_f_2_2, ("d_f_2_2", d_f_2_2))
-
+        # First Level - 3 Spells
         details_text.insert(tk.END, "\n\n    Wisdom 14-15: 3 Spells")
         details_text.insert(tk.END, "\n        1st Spell: ")
         details_text.insert(tk.END, d_f_3_1, ("d_f_3_1", d_f_3_1))
@@ -603,7 +601,7 @@ def display_character():
         details_text.insert(tk.END, d_f_3_2, ("d_f_3_2", d_f_3_2))
         details_text.insert(tk.END, "\n        3rd Spell: ")
         details_text.insert(tk.END, d_f_3_3, ("d_f_3_3", d_f_3_3))
-
+        # First Level - 4 Spells
         details_text.insert(tk.END, "\n\n    Wisdom 14-17: 4 Spells")
         details_text.insert(tk.END, "\n        1st Spell: ")
         details_text.insert(tk.END, d_f_4_1, ("d_f_4_1", d_f_4_1))
@@ -613,7 +611,7 @@ def display_character():
         details_text.insert(tk.END, d_f_4_3, ("d_f_4_3", d_f_4_3))
         details_text.insert(tk.END, "\n        4th Spell: ")
         details_text.insert(tk.END, d_f_4_4, ("d_f_4_4", d_f_4_4))
-
+        # First Level - 5 Spells
         details_text.insert(tk.END, "\n\n    Wisdom 16-19: 5 Spells")
         details_text.insert(tk.END, "\n        1st Spell: ")
         details_text.insert(tk.END, d_f_5_1, ("d_f_5_1", d_f_5_1))
@@ -625,7 +623,7 @@ def display_character():
         details_text.insert(tk.END, d_f_5_4, ("d_f_5_4", d_f_5_4))
         details_text.insert(tk.END, "\n        5th Spell: ")
         details_text.insert(tk.END, d_f_5_5, ("d_f_5_5", d_f_5_5))
-
+        # First Level - 6 Spells
         details_text.insert(tk.END, "\n\n    Wisdom 20: 6 Spells")
         details_text.insert(tk.END, "\n        1st Spell: ")
         details_text.insert(tk.END, d_f_6_1, ("d_f_6_1", d_f_6_1))
@@ -696,47 +694,58 @@ def display_character():
         details_text.config(state=tk.DISABLED)
 
     elif random_class == "Fighter":
+        # Assign Stats
         stat_spread = ["Strength", "Constitution", "Wisdom", "Charisma", "Intelligence", "Dexterity"]
         for i in range(6):
             details_text.insert(tk.END, f"{stat_spread[i]}: {roll_stat[i]}\n")
+
         details_text.config(state=tk.DISABLED)
 
     elif random_class == "Monk":
+        # Assign Stats
         stat_spread = ["Dexterity", "Constitution", "Wisdom", "Strength", "Intelligence", "Charisma"]
         for i in range(6):
             details_text.insert(tk.END, f"{stat_spread[i]}: {roll_stat[i]}\n")
+
         details_text.config(state=tk.DISABLED)
 
     elif random_class == "Paladin":
+        # Assign Stats
         stat_spread = ["Strength", "Charisma", "Constitution", "Wisdom", "Intelligence", "Dexterity"]
         for i in range(6):
             details_text.insert(tk.END, f"{stat_spread[i]}: {roll_stat[i]}\n")
+
         details_text.config(state=tk.DISABLED)
 
     elif random_class == "Ranger":
+        # Assign Stats
         stat_spread = ["Dexterity", "Wisdom", "Constitution", "Intelligence", "Strength", "Charisma"]
         for i in range(6):
             details_text.insert(tk.END, f"{stat_spread[i]}: {roll_stat[i]}\n")
+
         details_text.config(state=tk.DISABLED)
 
     elif random_class == "Rogue":
+        # Assign Stats
         stat_spread = ["Dexterity", "Constitution", "Wisdom", "Charisma", "Intelligence", "Strength"]
         for i in range(6):
             details_text.insert(tk.END, f"{stat_spread[i]}: {roll_stat[i]}\n")
+
         details_text.config(state=tk.DISABLED)
 
     elif random_class == "Sorcerer":
+        # Assign Stats
         stat_spread = ["Charisma", "Constitution", "Dexterity", "Intelligence", "Wisdom", "Strength"]
         for i in range(6):
             details_text.insert(tk.END, f"{stat_spread[i]}: {roll_stat[i]}\n")
+        # Generate Spells
         s_c_1, s_c_2, s_c_3, s_c_4 = random.sample(sorcerer_cantrip, 4)
         s_f_1, s_f_2 = random.sample(sorcerer_first, 2)
 
         details_text.config(state=tk.NORMAL)
-        #details_text.delete(1.0, tk.END)
 
         details_text.insert(tk.END, "\nSorcerers have 4 Cantrips and 2 First Level Spells")
-
+        # Cantrips
         details_text.insert(tk.END, "\n\nSorcerer Cantrips:")
         details_text.insert(tk.END, "\n    1st Cantrip: ")
         details_text.insert(tk.END, s_c_1, ("s_c_1", s_c_1))
@@ -746,13 +755,13 @@ def display_character():
         details_text.insert(tk.END, s_c_3, ("s_c_3", s_c_3))
         details_text.insert(tk.END, "\n    4th Cantrip: ")
         details_text.insert(tk.END, s_c_4, ("s_c_4", s_c_4))
-        
+        # First Level Spells
         details_text.insert(tk.END, "\n\nSorcerer First Level Spells:")
         details_text.insert(tk.END, "\n    1st Spell: ")
         details_text.insert(tk.END, s_f_1, ("s_f_1", s_f_1))
         details_text.insert(tk.END, "\n    2nd Spell: ")
         details_text.insert(tk.END, s_f_2, ("s_f_2", s_f_2))
-
+        # Cantrip URL
         details_text.tag_configure("s_c_1", foreground="blue", underline=True)
         details_text.tag_bind("s_c_1", "<Button-1>", lambda e: open_url(urls["spells"][s_c_1]))
         details_text.tag_configure("s_c_2", foreground="blue", underline=True)
@@ -761,7 +770,7 @@ def display_character():
         details_text.tag_bind("s_c_3", "<Button-1>", lambda e: open_url(urls["spells"][s_c_3]))
         details_text.tag_configure("s_c_4", foreground="blue", underline=True)
         details_text.tag_bind("s_c_4", "<Button-1>", lambda e: open_url(urls["spells"][s_c_4]))
-        
+        # First Level URL
         details_text.tag_configure("s_f_1", foreground="blue", underline=True)
         details_text.tag_bind("s_f_1", "<Button-1>", lambda e: open_url(urls["spells"][s_f_1]))
         details_text.tag_configure("s_f_2", foreground="blue", underline=True)
@@ -770,22 +779,24 @@ def display_character():
         details_text.config(state=tk.DISABLED)
 
     elif random_class == "Warlock":
+        # Assign Stats
         stat_spread = ["Charisma", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Strength"]
         for i in range(6):
             details_text.insert(tk.END, f"{stat_spread[i]}: {roll_stat[i]}\n")
+        # Generate Spells
         w_c_1, w_c_2 = random.sample(warlock_cantrip, 2)
         w_f_1, w_f_2 = random.sample(warlock_first, 2)
 
         details_text.config(state=tk.NORMAL)
-        #details_text.delete(1.0, tk.END)
-        details_text.insert(tk.END, "\nWarlocks have 2 Cantrips and 2 First Level Spells ")
 
+        details_text.insert(tk.END, "\nWarlocks have 2 Cantrips and 2 First Level Spells ")
+        # Cantrips
         details_text.insert(tk.END, "\n\nWarlock Cantrips: Be honest, we know Eldritch Blast is going to be one of them ")
         details_text.insert(tk.END, "\n    1st Cantrip: ")
         details_text.insert(tk.END, w_c_1, ("w_c_1", w_c_1))
         details_text.insert(tk.END, "\n    2nd Cantrip: ")
         details_text.insert(tk.END, w_c_2, ("w_c_2", w_c_2))
-
+        # First Level Spells
         details_text.insert(tk.END, "\n\nWarlock First Level Spells:")
         details_text.insert(tk.END, "\n    1st Spells: ")
         details_text.insert(tk.END, w_f_1, ("w_f_1", w_f_1))
@@ -805,9 +816,11 @@ def display_character():
         details_text.config(state=tk.DISABLED)
             
     elif random_class == "Wizard":
+        # Assign Stats
         stat_spread = ["Intelligence", "Constitution", "Dexterity", "Wisdom", "Charisma", "Strength"]
         for i in range(6):
             details_text.insert(tk.END, f"{stat_spread[i]}: {roll_stat[i]}\n")
+        # Generate Spells
         z_c_1, z_c_2, z_c_3 = random.sample(wizard_cantrip, 3)
         z_f_1 = random.choice(wizard_first)
         z_f_2_1, z_f_2_2 = random.sample(wizard_first, 2)
@@ -817,10 +830,9 @@ def display_character():
         z_f_6_1, z_f_6_2, z_f_6_3, z_f_6_4, z_f_6_5, z_f_6_6 =random.sample(wizard_first, 6)
 
         details_text.config(state=tk.NORMAL)
-        #details_text.delete(1.0, tk.END)
 
         details_text.insert(tk.END, "\nWizards have 2 Cantrips and 'INT+LVL' First Level Spells: ")
-
+        # Cantrips
         details_text.insert(tk.END, "\n\nWizard Cantrips: ")
         details_text.insert(tk.END, "\n    1st Cantrip: ")
         details_text.insert(tk.END, z_c_1, ("z_c_1", z_c_1))
@@ -828,18 +840,18 @@ def display_character():
         details_text.insert(tk.END, z_c_2, ("z_c_2", z_c_2))
         details_text.insert(tk.END, "\n    3rd Cantrip: ")
         details_text.insert(tk.END, z_c_3, ("z_c_3", z_c_3))
-        
+        # First Level - 1 Spell
         details_text.insert(tk.END, "\n\nWizard First Level Spells: ")
         details_text.insert(tk.END, "\n    Intelligence 1-11: 1 Spell")
         details_text.insert(tk.END, "\n        1st Spell: ")
         details_text.insert(tk.END, z_f_1, ("z_f_1", z_f_1))
-
+        # First Level - 2 Spells
         details_text.insert(tk.END, "\n\n    Intelligence 12-13: 2 Spells")
         details_text.insert(tk.END, "\n        1st Spell: ")
         details_text.insert(tk.END, z_f_2_1, ("z_f_2_1", z_f_2_1))
         details_text.insert(tk.END, "\n        2nd Spell: ")
         details_text.insert(tk.END, z_f_2_2, ("z_f_2_2", z_f_2_2))
-
+        # First Level - 3 Spells
         details_text.insert(tk.END, "\n\n    Intelligence 14-15: 3 Spells")
         details_text.insert(tk.END, "\n        1st Spell: ")
         details_text.insert(tk.END, z_f_3_1, ("z_f_3_1", z_f_3_1))
@@ -847,7 +859,7 @@ def display_character():
         details_text.insert(tk.END, z_f_3_2, ("z_f_3_2", z_f_3_2))
         details_text.insert(tk.END, "\n        3rd Spell: ")
         details_text.insert(tk.END, z_f_3_3, ("z_f_3_3", z_f_3_3))
-
+        # First Level - 4 Spells
         details_text.insert(tk.END, "\n\n    Intelligence 16-17: 4 Spells")
         details_text.insert(tk.END, "\n        1st Spell: ")
         details_text.insert(tk.END, z_f_4_1, ("z_f_4_1", z_f_4_1))
@@ -857,7 +869,7 @@ def display_character():
         details_text.insert(tk.END, z_f_4_3, ("z_f_4_3", z_f_4_3))
         details_text.insert(tk.END, "\n        4th Spell: ")
         details_text.insert(tk.END, z_f_4_4, ("z_f_4_4", z_f_4_4))
-
+        # First Level - 5 Spells
         details_text.insert(tk.END, "\n\n    Intelligence 18-19: 5 Spells")
         details_text.insert(tk.END, "\n        1st Spell: ")
         details_text.insert(tk.END, z_f_5_1, ("z_f_5_1", z_f_5_1))
@@ -869,7 +881,7 @@ def display_character():
         details_text.insert(tk.END, z_f_5_4, ("z_f_5_4", z_f_5_4))
         details_text.insert(tk.END, "\n        5th Spell: ")
         details_text.insert(tk.END, z_f_5_5, ("z_f_5_5", z_f_5_5))
-
+        # First Level - 6 Spells
         details_text.insert(tk.END, "\n\n    Intelligence 20: 6 Spells")
         details_text.insert(tk.END, "\n        1st Spell: ")
         details_text.insert(tk.END, z_f_6_1, ("z_f_6_1", z_f_6_1))
@@ -941,7 +953,7 @@ def display_character():
 
         details_text.config(state=tk.DISABLED)
         
-# URLs
+# Character Gen URLs
     details_text.tag_configure("race", foreground="blue", underline=True)
     details_text.tag_bind("race", "<Button-1>", lambda e: open_url(urls["races"][random_race]))
     details_text.tag_configure("class", foreground="blue", underline=True)
@@ -949,7 +961,6 @@ def display_character():
     details_text.tag_configure("background", foreground="blue", underline=True)
     details_text.tag_bind("background", "<Button-1>", lambda e: open_url(urls["backgrounds"][random_background]))
 
-    details_text.config(state=tk.DISABLED)
 # Make Window
 window = tk.Tk()
 window.title("Random Character Generator")
