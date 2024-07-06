@@ -71,22 +71,6 @@ surname_stat_show = ""
 class_spread = ""
 stat_roll = ""
 
-def make_global():
-    local_vars = {
-        "race_stat_show": race_stat_show,
-        "subrace_stat_show": subrace_stat_show,
-        "class_stat_show": class_stat_show,
-        "background_stat_show": background_stat_show,
-        "male_stat_show": male_stat_show,
-        "female_stat_show": female_stat_show,
-        "surname_stat_show": surname_stat_show,
-        "class_spread": class_spread,
-        "stat_roll": stat_roll,
-    }
-    for name, value in local_vars.items():
-        globals()[name] = value
-make_global()
-
 # Spells
 # Artificer - 2 cantrips - 2 first level
 artificer_cantrip = ["Acid Splash", "Booming Blade", "Create Bonfire", "Dancing Lights", "Fire Bolt", "Frostbite", "Green-Flame Blade", "Guidance", "Light", "Lightning Lure", "Mage Hand", "Magic Stone", "Mending", "Message", "Poison Spray", "Prestidigitation", "Ray of Frost", "Resistance", "Shocking Grasp", "Spare the Dying", "Sword Burst", "Thorn Whip", "Thunderclap"]
@@ -354,7 +338,15 @@ urls = {
 
 
 def generate_character():
-    make_global()
+    global race_stat_show
+    global subrace_stat_show
+    global class_stat_show
+    global background_stat_show
+    global male_stat_show
+    global female_stat_show
+    global surname_stat_show
+    global class_spread
+    global stat_roll
     random_race = random.choice(races)
     subraces = sub_race[random_race]
     random_subrace = random.choice(subraces)
