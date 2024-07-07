@@ -1,0 +1,16 @@
+class Armor():
+    def __init__(self, name, AC, strength, stealth, weight):
+        self.name = name
+        self.AC = AC
+        self.strength = strength
+        self.stealth = stealth
+        self.weight = weight
+
+# Light
+Padded = Armor(
+    "Padded",
+    11,
+    None,
+    None,
+    8
+)
